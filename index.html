@@ -326,8 +326,167 @@
 /* Utility Classes for hiding/showing */
 .sf-view { display: none; }
 .sf-view.sf-active { display: block; }
+
+        /* --- SERVICENOW ITSM STYLES --- */
+.sn-environment {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.85rem;
+    color: #343d47;
+}
+
+/* SN Top Banner */
+.sn-header {
+    background-color: #303a46;
+    color: #ffffff;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    flex-shrink: 0;
+}
+.sn-header-logo { font-weight: 600; font-size: 1.1rem; letter-spacing: 0.5px; }
+
+/* SN Body Structure */
+.sn-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    background-color: #e5e5e5; /* The gray background behind the "iframe" */
+}
+
+/* SN Left Navigation */
+.sn-sidebar {
+    width: 240px;
+    background-color: #e7e9eb;
+    border-right: 1px solid #d1d6d8;
+    display: flex;
+    flex-direction: column;
+}
+.sn-filter-nav {
+    padding: 10px;
+    border-bottom: 1px solid #d1d6d8;
+}
+.sn-filter-nav input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #879ab0;
+    border-radius: 3px;
+    font-size: 0.85rem;
+}
+.sn-nav-list { padding: 10px; list-style: none; }
+.sn-nav-list li { padding: 6px 10px; cursor: pointer; color: #343d47; font-weight: 600; }
+.sn-nav-list li:hover { background-color: #d1d6d8; }
+.sn-nav-list .sn-sub-item { font-weight: 400; padding-left: 20px; }
+
+/* SN Main Content Area (The "Iframe") */
+.sn-main-wrapper {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.sn-content-frame {
+    background-color: #ffffff;
+    border: 1px solid #bdc0c4;
+    min-height: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* SN Record Header & Actions */
+.sn-record-header {
+    border-bottom: 1px solid #bdc0c4;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafbfc;
+}
+.sn-record-title { font-size: 1.2rem; font-weight: 600; }
+.sn-btn {
+    background-color: #f1f2f3;
+    border: 1px solid #bdc0c4;
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #343d47;
+}
+.sn-btn-primary {
+    background-color: #293e40; /* Dark green primary */
+    color: #ffffff;
+    border-color: #293e40;
+}
+.sn-btn-primary:hover { background-color: #1e2e2f; }
+
+/* SN Dense Form Layout (Two Column) */
+.sn-form-body {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+}
+.sn-form-row {
+    display: flex;
+    align-items: flex-start;
+}
+.sn-form-row label {
+    width: 130px;
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 5px;
+    color: #485563;
+}
+.sn-form-row .sn-input-group {
+    flex: 1;
+}
+.sn-input {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #bdc0c4;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    background-color: #ffffff;
+}
+.sn-input:disabled { background-color: #f1f2f3; color: #7a8692; }
+
+/* SN Full Width Form Row */
+.sn-form-row-full { grid-column: span 2; display: flex; }
+.sn-form-row-full label { width: 130px; text-align: right; padding-right: 15px; padding-top: 5px; }
+.sn-form-row-full .sn-input-group { flex: 1; }
+
+/* SN Activity Log */
+.sn-activity-stream {
+    margin-top: 20px;
+    border-top: 1px solid #bdc0c4;
+    padding: 15px;
+    background-color: #fafbfc;
+    flex: 1;
+}
+.sn-log-entry {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #d1d6d8;
+}
+.sn-log-avatar {
+    width: 30px; height: 30px; background-color: #879ab0; color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: bold;
+}
+
+/* View Toggling */
+.sn-view { display: none; }
+.sn-view.sn-active { display: block; }
         
     </style>
+
+    <script language='javascript' async='true' type='text/javascript' src='https://cdn.whatfix.com/prod/cbff560a-7e43-4e5f-a048-b4f888d675ba/initiator/initiator.nocache.js'></script>
+    
 </head>
 <body>
 
@@ -545,8 +704,175 @@
 </section>
 
         <section id="servicenow-tab" class="tab-content">
-            <div class="placeholder-tab">ServiceNow Environment Goes Here</div>
-        </section>
+    <div class="sn-environment">
+        
+        <header class="sn-header">
+            <div class="sn-header-logo">ServiceNow</div>
+            <div>
+                <button class="sn-btn" onclick="snResetWorkflow()" style="background: transparent; color: white; border-color: #879ab0;">
+                    🔄 Restart Flow
+                </button>
+            </div>
+        </header>
+
+        <div class="sn-body">
+            <nav class="sn-sidebar">
+                <div class="sn-filter-nav">
+                    <input type="text" placeholder="Filter navigator" />
+                </div>
+                <ul class="sn-nav-list">
+                    <li>Incident</li>
+                    <li class="sn-sub-item">Create New</li>
+                    <li class="sn-sub-item">Assigned to me</li>
+                    <li class="sn-sub-item">Open</li>
+                    <li class="sn-sub-item">Closed</li>
+                </ul>
+            </nav>
+
+            <main class="sn-main-wrapper">
+                <div class="sn-content-frame">
+
+                    <div id="sn-view-report" class="sn-view sn-active">
+                        <div class="sn-record-header">
+                            <div class="sn-record-title">Incident - New record</div>
+                            <div>
+                                <button class="sn-btn sn-btn-primary" onclick="snSubmitIssue()">Submit</button>
+                            </div>
+                        </div>
+                        <div class="sn-form-body">
+                            <div class="sn-form-row">
+                                <label>Number</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="INC0010042" disabled /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Caller</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" id="sn-caller" value="System Administrator" /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Category</label>
+                                <div class="sn-input-group">
+                                    <select class="sn-input" disabled>
+                                        <option>-- None --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>State</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="New" disabled /></div>
+                            </div>
+                            <div class="sn-form-row-full">
+                                <label>Short description</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" id="sn-short-desc" value="VPN is not connecting from home network" /></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sn-view-triage" class="sn-view">
+                        <div class="sn-record-header">
+                            <div class="sn-record-title">Incident - INC0010042</div>
+                            <div>
+                                <button class="sn-btn">Update</button>
+                                <button class="sn-btn sn-btn-primary" onclick="snResolveIssue()">Resolve</button>
+                            </div>
+                        </div>
+                        <div class="sn-form-body">
+                            <div class="sn-form-row">
+                                <label>Number</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="INC0010042" disabled /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Caller</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="System Administrator" disabled /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Category</label>
+                                <div class="sn-input-group">
+                                    <select class="sn-input" id="sn-category">
+                                        <option>-- None --</option>
+                                        <option selected>Network</option>
+                                        <option>Software</option>
+                                        <option>Hardware</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>State</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="In Progress" disabled style="background:#eaf2e1; border-color:#82ab58;" /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Assignment group</label>
+                                <div class="sn-input-group">
+                                    <select class="sn-input">
+                                        <option>Network Support</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Assigned to</label>
+                                <div class="sn-input-group">
+                                    <select class="sn-input" id="sn-agent">
+                                        <option>-- None --</option>
+                                        <option selected>IT Support Agent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sn-form-row-full">
+                                <label>Short description</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="VPN is not connecting from home network" disabled /></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sn-view-closed" class="sn-view">
+                        <div class="sn-record-header">
+                            <div class="sn-record-title">Incident - INC0010042</div>
+                            <div>
+                                <span style="font-size: 0.85rem; color: #7a8692; margin-right: 15px;">Read only record</span>
+                            </div>
+                        </div>
+                        <div class="sn-form-body">
+                            <div class="sn-form-row">
+                                <label>Category</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="Network" disabled /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>State</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="Closed" disabled style="background:#f1f2f3; color:#7a8692;" /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Resolution code</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="Solved (Permanently)" disabled /></div>
+                            </div>
+                            <div class="sn-form-row">
+                                <label>Resolution notes</label>
+                                <div class="sn-input-group"><input type="text" class="sn-input" value="Reset VPN tunneling protocol." disabled /></div>
+                            </div>
+                        </div>
+                        
+                        <div class="sn-activity-stream">
+                            <div class="sn-log-entry">
+                                <div class="sn-log-avatar">SA</div>
+                                <div>
+                                    <div style="font-weight: 600; margin-bottom: 5px;">System Administrator <span style="color:#7a8692; font-weight: normal; font-size: 0.8rem;">Just now</span></div>
+                                    <div>State changed from <strong>Resolved</strong> to <strong>Closed</strong>.</div>
+                                </div>
+                            </div>
+                            <div class="sn-log-entry">
+                                <div class="sn-log-avatar" style="background: #293e40;">IT</div>
+                                <div>
+                                    <div style="font-weight: 600; margin-bottom: 5px;">IT Support Agent <span style="color:#7a8692; font-weight: normal; font-size: 0.8rem;">2 minutes ago</span></div>
+                                    <div>State changed from <strong>In Progress</strong> to <strong>Resolved</strong>.</div>
+                                    <div style="margin-top: 5px; color: #485563;"><em>Resolution notes: Reset VPN tunneling protocol.</em></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
 
         <section id="bullhorn-tab" class="tab-content">
             <div class="placeholder-tab">Bullhorn Environment Goes Here</div>
@@ -648,6 +974,37 @@ function sfResetWorkflow() {
     document.getElementById('sf-lead-lname').value = "Doe";
     document.getElementById('sf-lead-company').value = "Acme Corp";
 }
+
+        // --- SERVICENOW WORKFLOW LOGIC ---
+
+function snSubmitIssue() {
+    // Hide 'Report' view, show 'Triage & Assign' view
+    document.getElementById('sn-view-report').classList.remove('sn-active');
+    document.getElementById('sn-view-triage').classList.add('sn-active');
+}
+
+function snResolveIssue() {
+    // In a real flow, a resolve modal might pop up. For this demo, we'll fast forward to Closed.
+    // Hide 'Triage', show 'Closed' with audit logs.
+    document.getElementById('sn-view-triage').classList.remove('sn-active');
+    document.getElementById('sn-view-closed').classList.add('sn-active');
+}
+
+function snResetWorkflow() {
+    // 1. Hide later views
+    document.getElementById('sn-view-triage').classList.remove('sn-active');
+    document.getElementById('sn-view-closed').classList.remove('sn-active');
+    
+    // 2. Show initial 'Report' view
+    document.getElementById('sn-view-report').classList.add('sn-active');
+    
+    // 3. Reset form inputs back to defaults
+    document.getElementById('sn-caller').value = "System Administrator";
+    document.getElementById('sn-short-desc').value = "VPN is not connecting from home network";
+    document.getElementById('sn-category').selectedIndex = 1; // "Network"
+    document.getElementById('sn-agent').selectedIndex = 1; // "IT Support Agent"
+}
+        
     </script>
 </body>
 </html>
