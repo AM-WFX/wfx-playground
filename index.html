@@ -214,6 +214,119 @@
             font-size: 2rem;
             color: var(--text-light);
         }
+
+        /* --- SALESFORCE LIGHTNING STYLES --- */
+.sf-environment {
+    background-color: #b0c4df; /* Soft blue/gray background */
+    min-height: calc(100vh - 60px);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Global Header */
+.slds-global-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddbda;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.slds-app-launcher {
+    display: grid;
+    grid-template-columns: repeat(3, 4px);
+    gap: 2px;
+    cursor: pointer;
+}
+.slds-app-launcher span {
+    width: 4px; height: 4px; background-color: #706e6b; border-radius: 1px;
+}
+
+.slds-global-search {
+    flex: 0 1 400px;
+}
+.slds-global-search input {
+    width: 100%;
+    padding: 0.25rem 1rem;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    background-color: #f3f2f2;
+}
+
+.slds-avatar {
+    width: 32px; height: 32px;
+    background-color: #38c8e1;
+    border-radius: 50%;
+    color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;
+}
+
+/* Main Content Area */
+.slds-main {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+/* Cards & Elements */
+.slds-card {
+    background-color: #ffffff;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.slds-card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #dddbda; padding-bottom: 0.75rem; margin-bottom: 1rem;
+}
+.slds-card-header h2 { font-size: 1.2rem; font-weight: 600; }
+
+.slds-form-element { margin-bottom: 1rem; }
+.slds-form-element label { display: block; font-size: 0.8rem; color: #3e3e3c; margin-bottom: 0.25rem; }
+.slds-input {
+    width: 100%; padding: 0.5rem; border: 1px solid #dddbda; border-radius: 0.25rem; font-size: 0.9rem;
+}
+
+.slds-button {
+    padding: 0.25rem 1rem; border: 1px solid #dddbda; border-radius: 0.25rem;
+    background-color: white; color: #0176d3; cursor: pointer; font-weight: 600;
+}
+.slds-button_brand {
+    background-color: #0176d3; border-color: #0176d3; color: white;
+}
+.slds-button_brand:hover { background-color: #005fb2; }
+
+/* Modal Overlay */
+.slds-backdrop {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(8, 7, 7, 0.6); z-index: 9000;
+    display: none; align-items: center; justify-content: center;
+}
+.slds-modal {
+    background-color: white; border-radius: 0.25rem; width: 500px; max-width: 90%;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.16); display: flex; flex-direction: column;
+}
+.slds-modal__header { padding: 1rem; border-bottom: 1px solid #dddbda; text-align: center; font-weight: 600; }
+.slds-modal__content { padding: 1.5rem; }
+.slds-modal__footer { padding: 0.75rem 1rem; background-color: #f3f2f2; border-top: 1px solid #dddbda; text-align: right; }
+
+/* Kanban Board */
+.slds-kanban { display: flex; gap: 1rem; overflow-x: auto; padding-top: 1rem; }
+.slds-kanban-column {
+    flex: 1; min-width: 250px; background-color: #f3f2f2; border-radius: 0.25rem; padding: 0.5rem;
+}
+.slds-kanban-header { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #3e3e3c; }
+.slds-kanban-card { background-color: white; border: 1px solid #dddbda; padding: 0.75rem; border-radius: 0.25rem; border-left: 3px solid #0176d3; }
+
+/* Utility Classes for hiding/showing */
+.sf-view { display: none; }
+.sf-view.sf-active { display: block; }
+        
     </style>
 </head>
 <body>
@@ -293,8 +406,137 @@
         </section>
 
         <section id="salesforce-tab" class="tab-content">
-            <div class="placeholder-tab">Salesforce Environment Goes Here</div>
-        </section>
+    <div class="sf-environment">
+        
+        <header class="slds-global-header">
+            <div class="slds-app-launcher" title="App Launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <div class="slds-global-search">
+                <input type="text" placeholder="Search Salesforce..." class="slds-input" />
+            </div>
+            <div class="slds-avatar">JD</div>
+        </header>
+
+        <main class="slds-main">
+            
+            <div id="sf-view-create" class="sf-view sf-active">
+                <div class="slds-card">
+                    <div class="slds-card-header">
+                        <h2>New Lead</h2>
+                    </div>
+                    <div class="slds-form-element">
+                        <label>First Name</label>
+                        <input type="text" id="sf-lead-fname" class="slds-input" value="Jane" />
+                    </div>
+                    <div class="slds-form-element">
+                        <label>Last Name</label>
+                        <input type="text" id="sf-lead-lname" class="slds-input" value="Doe" />
+                    </div>
+                    <div class="slds-form-element">
+                        <label>Company</label>
+                        <input type="text" id="sf-lead-company" class="slds-input" value="Acme Corp" />
+                    </div>
+                    <div class="slds-form-element">
+                        <label>Lead Status</label>
+                        <select class="slds-input">
+                            <option>Open - Not Contacted</option>
+                            <option>Working - Contacted</option>
+                        </select>
+                    </div>
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button class="slds-button">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick="sfSaveLead()">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sf-view-record" class="sf-view">
+                <div class="slds-card">
+                    <div class="slds-card-header">
+                        <div>
+                            <span style="font-size: 0.8rem; color: #706e6b;">Lead</span>
+                            <h2>Jane Doe</h2>
+                            <p style="font-size: 0.9rem; color: #3e3e3c;">Acme Corp</p>
+                        </div>
+                        <div>
+                            <button class="slds-button">Edit</button>
+                            <button class="slds-button slds-button_brand" onclick="sfQualifyLead()">Qualify</button>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div class="slds-form-element"><label>Title</label><div class="slds-input" style="background: #f3f2f2;">VP of Purchasing</div></div>
+                            <div class="slds-form-element"><label>Phone</label><div class="slds-input" style="background: #f3f2f2;">(555) 123-4567</div></div>
+                        </div>
+                        <div>
+                            <div class="slds-form-element"><label>Lead Source</label><div class="slds-input" style="background: #f3f2f2;">Web Demo</div></div>
+                            <div class="slds-form-element"><label>Rating</label><div class="slds-input" style="background: #f3f2f2;">Hot</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sf-view-kanban" class="sf-view">
+                <div class="slds-card" style="max-width: 100%;">
+                    <div class="slds-card-header">
+                        <h2>Opportunities Pipeline</h2>
+                    </div>
+                    <div class="slds-kanban">
+                        <div class="slds-kanban-column">
+                            <div class="slds-kanban-header">Prospecting (0)</div>
+                        </div>
+                        <div class="slds-kanban-column">
+                            <div class="slds-kanban-header">Needs Analysis (1)</div>
+                            <div class="slds-kanban-card" style="margin-bottom: 0.5rem;">
+                                <strong>Global Tech - 500 Licenses</strong><br/>
+                                <span style="font-size: 0.8rem; color: #706e6b;">$45,000</span>
+                            </div>
+                        </div>
+                        <div class="slds-kanban-column" style="background-color: #e5f2e5;"> <div class="slds-kanban-header">Closed Won (1)</div>
+                            <div class="slds-kanban-card">
+                                <strong>Acme Corp - New Deal</strong><br/>
+                                <span style="font-size: 0.8rem; color: #706e6b;">$12,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div id="sf-modal-backdrop" class="slds-backdrop">
+            <div class="slds-modal">
+                <div class="slds-modal__header">
+                    <h2>Convert Lead</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <div class="slds-form-element">
+                        <label>Record Owner</label>
+                        <input type="text" class="slds-input" value="JD (Current User)" disabled />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 1rem;">
+                        <label>Opportunity Name</label>
+                        <input type="text" class="slds-input" value="Acme Corp - New Deal" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 1rem;">
+                        <label>Converted Status</label>
+                        <select class="slds-input">
+                            <option>Closed - Converted</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button" onclick="document.getElementById('sf-modal-backdrop').style.display='none'">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="sfConvertDeal()">Convert</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
         <section id="servicenow-tab" class="tab-content">
             <div class="placeholder-tab">ServiceNow Environment Goes Here</div>
@@ -365,6 +607,31 @@
                 });
             });
         });
+
+        // --- SALESFORCE WORKFLOW LOGIC ---
+
+function sfSaveLead() {
+    // Hide create view, show record view
+    document.getElementById('sf-view-create').classList.remove('sf-active');
+    document.getElementById('sf-view-record').classList.add('sf-active');
+}
+
+function sfQualifyLead() {
+    // Show the Convert Modal overlay
+    document.getElementById('sf-modal-backdrop').style.display = 'flex';
+}
+
+function sfConvertDeal() {
+    // Hide the modal
+    document.getElementById('sf-modal-backdrop').style.display = 'none';
+    
+    // Hide the record view
+    document.getElementById('sf-view-record').classList.remove('sf-active');
+    
+    // Show the Kanban pipeline view
+    document.getElementById('sf-view-kanban').classList.add('sf-active');
+}
+        
     </script>
 </body>
 </html>
