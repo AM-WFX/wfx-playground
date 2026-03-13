@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Demo Sandbox</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL VARIABLES & RESET --- */
+        :root {
+            --primary-color: #0052CC;
+            --primary-hover: #003d99;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-light: #f4f5f7;
+            --bg-white: #ffffff;
+            --border-color: #e1e4e8;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- GLOBAL NAVIGATION --- */
+        .global-nav {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-btn.active {
+            color: var(--primary-color);
+        }
+
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px; /* Aligns with bottom of nav */
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* --- MAIN CONTENT & TAB LOGIC --- */
+        .app-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-content {
+            display: none; /* Hide all tabs by default */
+            flex: 1;
+        }
+
+        .tab-content.active {
+            display: block; /* Show active tab */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HOME PAGE STYLES --- */
+        .home-hero {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .home-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .home-hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid-container {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Card Styles */
+        .app-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            /* Placeholder for actual icons or logos */
+        }
+
+        .app-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .launch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+
+        .launch-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Placeholder styles for other tabs */
+        .placeholder-tab {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 2rem;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="global-nav">
+        <div class="nav-brand" data-target="home-tab" onclick="switchTab('home-tab')">Demo Sandbox</div>
+        <ul class="nav-links">
+            <li><button class="nav-btn active" data-target="home-tab">Home</button></li>
+            <li><button class="nav-btn" data-target="salesforce-tab">Salesforce</button></li>
+            <li><button class="nav-btn" data-target="servicenow-tab">ServiceNow</button></li>
+            <li><button class="nav-btn" data-target="bullhorn-tab">Bullhorn</button></li>
+            <li><button class="nav-btn" data-target="jira-tab">Jira</button></li>
+            <li><button class="nav-btn" data-target="workday-tab">Workday</button></li>
+            <li><button class="nav-btn" data-target="sap-tab">SAP</button></li>
+            <li><button class="nav-btn" data-target="zendesk-tab">Zendesk</button></li>
+        </ul>
+    </nav>
+
+    <main class="app-container">
+        
+        <section id="home-tab" class="tab-content active">
+            <header class="home-hero">
+                <h1>Welcome to the Enterprise Demo Sandbox</h1>
+                <p>A static environment for building, anchoring, and demoing digital adoption workflows across multiple simulated applications.</p>
+            </header>
+
+            <div class="grid-container">
+                <div class="app-card">
+                    <div class="app-icon">☁️</div>
+                    <h2>Salesforce</h2>
+                    <p>CRM workflow simulating Lead Creation to Closed Won Pipeline.</p>
+                    <button class="launch-btn" data-target="salesforce-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">⚙️</div>
+                    <h2>ServiceNow</h2>
+                    <p>ITSM workflow for incident reporting, routing, and resolution.</p>
+                    <button class="launch-btn" data-target="servicenow-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">🐂</div>
+                    <h2>Bullhorn</h2>
+                    <p>ATS workflow from Job Order creation to Candidate placement.</p>
+                    <button class="launch-btn" data-target="bullhorn-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">📋</div>
+                    <h2>Jira</h2>
+                    <p>Agile project management from Backlog ticket to Done sprint.</p>
+                    <button class="launch-btn" data-target="jira-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">👔</div>
+                    <h2>Workday</h2>
+                    <p>HRMS workflow featuring document uploads and benefit steppers.</p>
+                    <button class="launch-btn" data-target="workday-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">📊</div>
+                    <h2>SAP Fiori</h2>
+                    <p>ERP financial workflow for requisitions and purchase approvals.</p>
+                    <button class="launch-btn" data-target="sap-tab">Launch App</button>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">🎧</div>
+                    <h2>Zendesk</h2>
+                    <p>Support Agent Workspace simulation with macros and CSAT surveys.</p>
+                    <button class="launch-btn" data-target="zendesk-tab">Launch App</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="salesforce-tab" class="tab-content">
+            <div class="placeholder-tab">Salesforce Environment Goes Here</div>
+        </section>
+
+        <section id="servicenow-tab" class="tab-content">
+            <div class="placeholder-tab">ServiceNow Environment Goes Here</div>
+        </section>
+
+        <section id="bullhorn-tab" class="tab-content">
+            <div class="placeholder-tab">Bullhorn Environment Goes Here</div>
+        </section>
+
+        <section id="jira-tab" class="tab-content">
+            <div class="placeholder-tab">Jira Environment Goes Here</div>
+        </section>
+
+        <section id="workday-tab" class="tab-content">
+            <div class="placeholder-tab">Workday Environment Goes Here</div>
+        </section>
+
+        <section id="sap-tab" class="tab-content">
+            <div class="placeholder-tab">SAP Environment Goes Here</div>
+        </section>
+
+        <section id="zendesk-tab" class="tab-content">
+            <div class="placeholder-tab">Zendesk Environment Goes Here</div>
+        </section>
+
+    </main>
+
+    <script>
+        // Core Tab Switching Logic
+        function switchTab(targetTabId) {
+            // 1. Hide all tab contents
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // 2. Remove active state from all navigation buttons
+            const allNavBtns = document.querySelectorAll('.nav-btn');
+            allNavBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 3. Show the selected tab content
+            const targetTab = document.getElementById(targetTabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // 4. Highlight the corresponding navigation button in the top bar
+            const targetNavBtn = document.querySelector(`.nav-btn[data-target="${targetTabId}"]`);
+            if (targetNavBtn) {
+                targetNavBtn.classList.add('active');
+            }
+
+            // Optional: Scroll to top when switching apps
+            window.scrollTo(0, 0);
+        }
+
+        // Add event listeners to all buttons that should trigger a tab switch
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select both the top nav buttons AND the "Launch App" buttons on the cards
+            const triggerButtons = document.querySelectorAll('.nav-btn, .launch-btn');
+            
+            triggerButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const targetId = e.target.getAttribute('data-target');
+                    switchTab(targetId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
