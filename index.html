@@ -405,7 +405,7 @@
             </div>
         </section>
 
-        <section id="salesforce-tab" class="tab-content">
+       <section id="salesforce-tab" class="tab-content">
     <div class="sf-environment">
         
         <header class="slds-global-header">
@@ -419,7 +419,7 @@
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">
                 <button class="slds-button" onclick="sfResetWorkflow()" style="color: #706e6b; border-color: #dddbda;">
-                    🔄 Restart Flow
+                    Restart Flow
                 </button>
                 <div class="slds-avatar">JD</div>
             </div>
@@ -500,7 +500,8 @@
                                 <span style="font-size: 0.8rem; color: #706e6b;">$45,000</span>
                             </div>
                         </div>
-                        <div class="slds-kanban-column" style="background-color: #e5f2e5;"> <div class="slds-kanban-header">Closed Won (1)</div>
+                        <div class="slds-kanban-column" style="background-color: #e5f2e5;">
+                            <div class="slds-kanban-header">Closed Won (1)</div>
                             <div class="slds-kanban-card">
                                 <strong>Acme Corp - New Deal</strong><br/>
                                 <span style="font-size: 0.8rem; color: #706e6b;">$12,500</span>
@@ -613,41 +614,36 @@
             });
         });
 
-        // --- SALESFORCE WORKFLOW LOGIC ---
+       // --- SALESFORCE WORKFLOW LOGIC ---
 
 function sfSaveLead() {
-    // Hide create view, show record view
     document.getElementById('sf-view-create').classList.remove('sf-active');
     document.getElementById('sf-view-record').classList.add('sf-active');
 }
 
 function sfQualifyLead() {
-    // Show the Convert Modal overlay
     document.getElementById('sf-modal-backdrop').style.display = 'flex';
 }
 
 function sfConvertDeal() {
-    // Hide the modal
     document.getElementById('sf-modal-backdrop').style.display = 'none';
-    
-    // Hide the record view
     document.getElementById('sf-view-record').classList.remove('sf-active');
-    
-    // Show the Kanban pipeline view
     document.getElementById('sf-view-kanban').classList.add('sf-active');
 }
-        function sfResetWorkflow() {
-    // 1. Hide the modal just in case it's open
+
+// Ensure this matches the onclick="sfResetWorkflow()" in the HTML button above
+function sfResetWorkflow() {
+    // 1. Hide modal
     document.getElementById('sf-modal-backdrop').style.display = 'none';
     
-    // 2. Remove the active class from all Salesforce views
+    // 2. Hide later views
     document.getElementById('sf-view-record').classList.remove('sf-active');
     document.getElementById('sf-view-kanban').classList.remove('sf-active');
     
-    // 3. Add the active class back to the very first view (Create Lead)
+    // 3. Show initial view
     document.getElementById('sf-view-create').classList.add('sf-active');
 
-    // Optional: If you want to clear out the text inputs back to default
+    // 4. Reset text fields
     document.getElementById('sf-lead-fname').value = "Jane";
     document.getElementById('sf-lead-lname').value = "Doe";
     document.getElementById('sf-lead-company').value = "Acme Corp";
