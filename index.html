@@ -417,7 +417,12 @@
             <div class="slds-global-search">
                 <input type="text" placeholder="Search Salesforce..." class="slds-input" />
             </div>
-            <div class="slds-avatar">JD</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="slds-button" onclick="sfResetWorkflow()" style="color: #706e6b; border-color: #dddbda;">
+                    🔄 Restart Flow
+                </button>
+                <div class="slds-avatar">JD</div>
+            </div>
         </header>
 
         <main class="slds-main">
@@ -631,7 +636,22 @@ function sfConvertDeal() {
     // Show the Kanban pipeline view
     document.getElementById('sf-view-kanban').classList.add('sf-active');
 }
-        
+        function sfResetWorkflow() {
+    // 1. Hide the modal just in case it's open
+    document.getElementById('sf-modal-backdrop').style.display = 'none';
+    
+    // 2. Remove the active class from all Salesforce views
+    document.getElementById('sf-view-record').classList.remove('sf-active');
+    document.getElementById('sf-view-kanban').classList.remove('sf-active');
+    
+    // 3. Add the active class back to the very first view (Create Lead)
+    document.getElementById('sf-view-create').classList.add('sf-active');
+
+    // Optional: If you want to clear out the text inputs back to default
+    document.getElementById('sf-lead-fname').value = "Jane";
+    document.getElementById('sf-lead-lname').value = "Doe";
+    document.getElementById('sf-lead-company').value = "Acme Corp";
+}
     </script>
 </body>
 </html>
